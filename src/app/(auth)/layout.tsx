@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Pretendard from "@/styles/local-font";
 
 import "@/styles/globals.css";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "AEYE - 로그인",
@@ -15,7 +16,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={Pretendard.className}>{children}</body>
+      <body className={cn(Pretendard.className, "h-dvh w-dvw")}>
+        {children}
+      </body>
     </html>
   );
 }
