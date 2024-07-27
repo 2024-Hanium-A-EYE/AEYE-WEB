@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={cn(Pretendard.className, "h-dvh w-dvw")}>
+      <body className={cn(Pretendard.className, "min-w-[1440px] h-dvh")}>
         {children}
       </body>
     </html>
