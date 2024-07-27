@@ -6,8 +6,11 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { signin } from "@/actions/signin";
 import { SigninSchema } from "@/types";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const SigninForm = () => {
+  const router = useRouter();
   return (
     <div className="flex w-fit min-w-[410px] flex-col gap-[3.875rem]">
       <div className="flex flex-col">
@@ -24,7 +27,11 @@ const SigninForm = () => {
           const email = formData.get("email");
           const password = formData.get("password");
 
-          await signin({ email, password } as SigninSchema);
+          const res = await signin({ email, password } as SigninSchema);
+          if (res.error) {
+            toast.error(res.error, { richColors: true });
+            return;
+          } else router.push("/");
         }}
       >
         <Label

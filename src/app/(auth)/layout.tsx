@@ -3,6 +3,7 @@ import Pretendard from "@/styles/local-font";
 
 import "@/styles/globals.css";
 import { cn } from "@/lib/utils";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "AEYE - 로그인",
@@ -18,6 +19,7 @@ export default function RootLayout({
     <html lang="ko">
       <body className={cn(Pretendard.className, "min-w-[1440px] h-dvh")}>
         {children}
+        <Toaster />
       </body>
     </html>
   );
