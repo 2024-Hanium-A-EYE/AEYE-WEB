@@ -5,5 +5,13 @@
       "files": ["*.ts", "*.tsx", "*.js"],
       "parser": "@typescript-eslint/parser"
     }
-  ]
+  ],
+  "rules": {
+    "tailwindcss/no-custom-classname": [
+      1,
+      {
+        "whiteList": ["toaster", "group"]
+      }
+    ]
+  }
 }
