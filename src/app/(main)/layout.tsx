@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Pretendard from "@/styles/local-font";
 
 import "@/styles/globals.css";
+import Navbar from "@/components/common/Navbar";
 
 export const metadata: Metadata = {
   title: "AEYE",
@@ -15,7 +16,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={Pretendard.className}>{children}</body>
+      <body className={Pretendard.className}>
+        <Navbar />
+        {children}
+      </body>
     </html>
   );
 }
