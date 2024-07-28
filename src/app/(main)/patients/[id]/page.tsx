@@ -1,7 +1,6 @@
 import { Patient } from "@/types";
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import CheckupTable from "@/components/patients/CheckupTable";
 import CheckupList from "@/components/patients/CheckupList";
 
 export async function generateStaticParams() {
@@ -29,7 +28,7 @@ const PatientDetailPage = async ({ params }: { params: { id: string } }) => {
     notFound();
   }
   return (
-    <main className="m-auto max-w-[1440px] px-8">
+    <main className="m-auto max-w-[1440px] px-8 pb-10">
       <section>
         <h1 className="mb-12 text-3xl font-semibold">{`${patient.name} 님의 진료 기록`}</h1>
         <div className="flex h-40 w-full gap-10 rounded-xl border p-5">

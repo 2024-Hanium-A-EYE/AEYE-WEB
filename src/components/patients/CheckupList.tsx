@@ -44,7 +44,16 @@ const CheckupList = ({ checkups }: CheckupListProps) => {
         </div>
       </div>
       <div className="rounded-lg border p-10">
-        <p className="text-gray-600">{activeCheckup?.report}</p>
+        <h3 className="text-gray-600">
+          {"AI Diagnosis: " + activeCheckup?.report.ai.diagnosis}
+        </h3>
+        <p className="text-gray-600">
+          {"Probability: " + activeCheckup?.report.ai.probability}
+        </p>
+        <br />
+        <h3 className="text-gray-600">
+          {"Doctor's Diagnosis: " + activeCheckup?.report.doctor.diagnosis}
+        </h3>
       </div>
     </div>
   );
