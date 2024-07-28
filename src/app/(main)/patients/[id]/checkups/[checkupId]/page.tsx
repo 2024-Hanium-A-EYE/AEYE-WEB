@@ -1,21 +1,24 @@
-import { Patient } from "@/types";
+import { Checkup, Patient } from "@/types";
 import { notFound } from "next/navigation";
+import React from "react";
 import Image from "next/image";
-import CheckupList from "@/components/patients/CheckupList";
-import { type Metadata } from "next";
-
-export async function generateStaticParams() {
-  const patients: Patient[] = await fetch(
-    "http://localhost:3000/api/patients"
-  ).then((res) => res.json());
-
-  return patients.map((patient) => ({
-    id: patient.id.toString(),
-  }));
-}
+import { Metadata } from "next/types";
 
 const fetchPatientById = async (id: string): Promise<Patient | null> => {
   const res = await fetch(`http://localhost:3000/api/patients/${id}`);
+  if (!res.ok) {
+    return null;
+  }
+  return res.json();
+};
+
+const fetchCheckupById = async (
+  patientId: string,
+  checkupId: string
+): Promise<Checkup | null> => {
+  const res = await fetch(
+    `http://localhost:3000/api/patients/${patientId}/checkups/${checkupId}`
+  );
   if (!res.ok) {
     return null;
   }
@@ -26,25 +29,36 @@ const fetchPatientById = async (id: string): Promise<Patient | null> => {
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: { id: string; checkupId: string };
 }): Promise<Metadata> {
   const patient = await fetchPatientById(params.id);
   return {
-    title: patient ? `${patient.name} - 대시보드` : "404",
+    title: patient
+      ? `${patient.name} - ${params.checkupId}번 진료 기록`
+      : "404",
     description: "진료 데이터의 새로운 눈, AEYE",
   };
 }
 
-const PatientDetailPage = async ({ params }: { params: { id: string } }) => {
+const CheckupDetailPage = async ({
+  params,
+}: {
+  params: { id: string; checkupId: string };
+}) => {
   const patient = await fetchPatientById(params.id);
-
   if (!patient) {
     notFound();
   }
+  const checkup = await fetchCheckupById(params.id, params.checkupId);
+
+  if (!checkup) {
+    notFound();
+  }
+
   return (
     <main className="m-auto max-w-[1440px] px-8 pb-10">
       <section>
-        <h1 className="mb-12 text-3xl font-semibold">{`${patient.name} 님의 진료 기록`}</h1>
+        <h1 className="mb-12 text-3xl font-semibold">{`${patient.name} 님의 진료 기록 - ${checkup.date}`}</h1>
         <div className="flex h-40 w-full gap-10 rounded-xl border p-5">
           <div className="relative size-28 overflow-hidden rounded-full">
             <Image
@@ -67,12 +81,8 @@ const PatientDetailPage = async ({ params }: { params: { id: string } }) => {
         </div>
       </section>
       <div className="h-20" />
-      <section>
-        <h2 className="mb-8 text-xl">날짜별 진료기록</h2>
-        <CheckupList checkups={patient.checkups} />
-      </section>
     </main>
   );
 };
 
-export default PatientDetailPage;
+export default CheckupDetailPage;
