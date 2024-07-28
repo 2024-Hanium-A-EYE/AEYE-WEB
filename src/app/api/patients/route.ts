@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import patients from "@/database/patients.json";
 import { Patient } from "@/types";
+import { cookies } from "next/headers";
 
 export async function GET(req: NextRequest): Promise<NextResponse<Patient[]>> {
   try {

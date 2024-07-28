@@ -1,7 +1,7 @@
 "use server";
 
 import { SigninSchema } from "@/types";
-import { redirect, RedirectType } from "next/navigation";
+import { cookies } from "next/headers";
 
 export const signin = async (values: SigninSchema) => {
   if (values.email !== "test@test.com") {
@@ -9,5 +9,6 @@ export const signin = async (values: SigninSchema) => {
   } else if (values.password !== "1234qwer") {
     return { error: "올바르지 않은 비밀번호입니다." };
   }
+  cookies().set("AEYE_CU", "test");
   return { success: "성공적으로 로그인 되었습니다!" };
 };
