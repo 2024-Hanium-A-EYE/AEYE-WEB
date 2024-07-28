@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
+import Avatar from "./Avatar";
+
 const Navbar = () => {
   return (
     <header className="m-auto w-full">
@@ -11,14 +13,7 @@ const Navbar = () => {
             <Image src="/images/logo-compound-horizontal.png" alt="로고" fill />
           </Link>
         </div>
-        <div className="relative aspect-square w-[60px] overflow-hidden rounded-full border">
-          <Image
-            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=2564&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            alt="아바타"
-            className="object-cover"
-            fill
-          />
-        </div>
+        <Avatar />
       </nav>
     </header>
   );
