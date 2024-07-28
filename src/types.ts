@@ -23,5 +23,16 @@ export type Checkup = {
   symptom: string;
   status: "HIGH_RISK" | "MODERATE_RISK" | "LOW_RISK" | "NORMAL";
   ultrasoundImages: string[];
-  report: string;
+  report: {
+    ai: AIReport;
+    doctor: DoctorReport;
+  };
 };
+
+export type Report = {
+  diagnosis: string;
+  probability: string;
+};
+
+type AIReport = Report;
+type DoctorReport = Omit<Report, "probability">;
