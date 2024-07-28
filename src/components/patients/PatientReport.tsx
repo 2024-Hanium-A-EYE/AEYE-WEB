@@ -6,6 +6,7 @@ import { Button } from "../ui/button";
 import AIDiagnosis from "./AIDiagnosis";
 import { Checkup } from "@/types";
 import { Report } from "@/types";
+import Image from "next/image";
 interface PatientReportProps {
   checkup: Checkup;
 }
@@ -52,7 +53,12 @@ const PatientReport = ({ checkup }: PatientReportProps) => {
         <ImageUploader initialSrc={checkup.ultrasoundImages[0]} />
       </div>
       <div className="h-10" />
-      <Button onClick={handleClickStartDiagnosis}>AI 진단 시작하기</Button>
+      <Button onClick={handleClickStartDiagnosis}>
+        <div className="flex items-center gap-2">
+          <Image src="/images/ai.png" width={16} height={16} alt="ai 아이콘" />
+          <p>AI 진단 시작하기</p>
+        </div>
+      </Button>
       <div className="h-10" />
       <div className="rounded-lg border p-10">
         <AIDiagnosis initialReport={checkup.report.ai} newReport={newReport} />
