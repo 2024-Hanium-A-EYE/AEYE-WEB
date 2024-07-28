@@ -14,7 +14,7 @@ const fetchPatients = async () => {
 const PatientPage = async () => {
   const patients = await fetchPatients();
   return (
-    <main className="m-auto max-w-[1440px] px-8">
+    <main className="m-auto max-w-[1440px] px-8 pb-10">
       <PatientTable patients={patients} />
     </main>
   );
