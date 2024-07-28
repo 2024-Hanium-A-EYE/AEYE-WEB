@@ -4,9 +4,28 @@ import React, { useState } from "react";
 import ImageUploader from "./ImageUploader";
 import { Button } from "../ui/button";
 import AIDiagnosis from "./AIDiagnosis";
+import { MultiStepLoader as Loader } from "../ui/multi-step-loader";
 import { Checkup } from "@/types";
 import { Report } from "@/types";
 import Image from "next/image";
+
+const loadingStates = [
+  {
+    text: "AI 서버에 연결중이에요...",
+  },
+  {
+    text: "사진을 분석중이에요...",
+  },
+  {
+    text: "사진을 토대로 진단을 내리는 중이에요...",
+  },
+  {
+    text: "거의 다 왔어요!!",
+  },
+  {
+    text: "AI 진단이 완료되었어요!",
+  },
+];
 interface PatientReportProps {
   checkup: Checkup;
 }
@@ -39,11 +58,25 @@ const PatientReport = ({ checkup }: PatientReportProps) => {
     diagnosis: string;
     probability: string;
   } | null>(null);
+  const [isLoading, setLoading] = useState(false);
+
+  /**
+   * @description 5초의 로딩 후 AI 진단을 내리는 목 서버 역할 함수
+   */
+  const mockServerLoading = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 5000);
+    setTimeout(() => {
+      const newReport = getRandomDiagnosis();
+      setNewReport(newReport);
+    }, 5000);
+  };
 
   const handleClickStartDiagnosis = () => {
     /** @TODO imageUploader에서 업로드한 이미지 2장을 가지고 서버에 보내서 AI newReport를 받아온다. */
-    const newReport = getRandomDiagnosis();
-    setNewReport(newReport);
+    mockServerLoading();
   };
 
   return (
@@ -68,6 +101,11 @@ const PatientReport = ({ checkup }: PatientReportProps) => {
         </h3>
         <p className="text-gray-600">{checkup?.report.doctor.diagnosis}</p>
       </div>
+      <Loader
+        loadingStates={loadingStates}
+        loading={isLoading}
+        duration={1000}
+      />
     </>
   );
 };
