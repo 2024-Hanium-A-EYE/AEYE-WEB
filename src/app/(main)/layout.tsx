@@ -3,6 +3,7 @@ import Pretendard from "@/styles/local-font";
 
 import "@/styles/globals.css";
 import Navbar from "@/components/common/Navbar";
+import { CookiesProvider } from "next-client-cookies/server";
 
 export const metadata: Metadata = {
   title: "AEYE",
@@ -17,8 +18,10 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className={Pretendard.className}>
-        <Navbar />
-        {children}
+        <CookiesProvider>
+          <Navbar />
+          {children}
+        </CookiesProvider>
       </body>
     </html>
   );

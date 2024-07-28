@@ -3,10 +3,9 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 const protectedRoutes = ["/patients"];
-
+const users = ["test@test.com", "mole@naver.com"];
 export function middleware(request: NextRequest) {
-  console.log("req url pathname:", request.nextUrl.pathname);
-  const isLoggedIn = cookies().get("AEYE_CU")?.value === "test";
+  const isLoggedIn = !!cookies().get("AEYE_CU")?.value;
   const isProtected = protectedRoutes.includes(request.nextUrl.pathname);
 
   if (!isLoggedIn && isProtected) {
