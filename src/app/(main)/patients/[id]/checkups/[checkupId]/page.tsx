@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import React from "react";
 import Image from "next/image";
 import { Metadata } from "next/types";
+import ImageUploader from "@/components/patients/ImageUploader";
+import { Button } from "@/components/ui/button";
 
 const fetchPatientById = async (id: string): Promise<Patient | null> => {
   const res = await fetch(`http://localhost:3000/api/patients/${id}`);
@@ -80,7 +82,26 @@ const CheckupDetailPage = async ({
           </p>
         </div>
       </section>
-      <div className="h-20" />
+      <div className="h-10" />
+      <div className="flex w-full gap-5">
+        <ImageUploader initialSrc={checkup.ultrasoundImages[0]} />
+        <ImageUploader initialSrc={checkup.ultrasoundImages[0]} />
+      </div>
+      <div className="h-10" />
+      <Button>AI 진단 시작하기</Button>
+      <div className="h-10" />
+      <div className="rounded-lg border p-10">
+        <h3 className="text-gray-600">
+          {"AI Diagnosis: " + checkup?.report.ai.diagnosis}
+        </h3>
+        <p className="text-gray-600">
+          {"Probability: " + checkup?.report.ai.probability}
+        </p>
+        <br />
+        <h3 className="text-gray-600">
+          {"Doctor's Diagnosis: " + checkup?.report.doctor.diagnosis}
+        </h3>
+      </div>
     </main>
   );
 };
