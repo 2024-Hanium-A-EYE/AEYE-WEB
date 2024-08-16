@@ -1,0 +1,26 @@
+#############################################################
+# AEYE Web Docker Compose File
+# Created By Yoonchul Chung
+# Created At 2024.08.03
+# Welcome to Visit Github : https://github.com/Yoonchulchung
+#############################################################
+version: '3.3'
+
+services:
+  frontend:
+    build:
+      context: ..
+      dockerfile: Docker/Next_js/Dockerfile
+    image: aeye_web_front:1.0
+    container_name:  aeye_web_front
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../AEYE_Front/:/app/
+    command: sh -c "npm run build && npm start"
+    networks:
+      - aeye_web
+
+networks:
+  aeye_web:
+    driver: bridge

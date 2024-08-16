@@ -4,15 +4,32 @@ import Image from "next/image";
 import CheckupList from "@/components/patients/CheckupList";
 import { type Metadata } from "next";
 
-export async function generateStaticParams() {
-  const patients: Patient[] = await fetch(
-    "http://localhost:3000/api/patients"
-  ).then((res) => res.json());
+export async function generateStaticParams() { 
 
-  return patients.map((patient) => ({
-    id: patient.id.toString(),
-  }));
+  if (process.env.NODE_ENV === "production") {
+    return [];
+  }
+
+  try {
+    const patients: Patient[] = await fetch("http://localhost:3000/api/patients")
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Failed to fetch');
+        }
+        return res.json();  // 여기에서 반환된 JSON 데이터를 반환
+      });
+
+    return patients.map((patient) => ({
+      id: patient.id.toString(),
+    }));
+
+  } catch (error) {
+    console.error("Error fetching patients:", error);
+    // 에러가 발생할 경우 빈 배열을 반환
+    return [];
+  }
 }
+  
 
 const fetchPatientById = async (id: string): Promise<Patient | null> => {
   const res = await fetch(`http://localhost:3000/api/patients/${id}`);
