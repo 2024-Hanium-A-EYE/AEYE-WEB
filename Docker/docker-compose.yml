@@ -28,7 +28,7 @@ services:
     ports:
       - "2000:2000"
     volumes:
-      - ../AEYE_Router/AEYE_Router/:/app/
+      - ../AEYE_Router/:/app/
     command: python3.8 manage.py runserver 0.0.0.0:2000
     networks:
       - aeye_web
