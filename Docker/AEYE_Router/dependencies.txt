@@ -29,9 +29,6 @@ colorama
 # pillow
 pillow
 
-# mysqlclient
-mysqlclient
-
 asyncio
 aiohttp
 
