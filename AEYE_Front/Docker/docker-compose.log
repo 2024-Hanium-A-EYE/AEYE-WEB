@@ -1,0 +1,10 @@
+time="2024-08-17T00:12:16+09:00" level=warning msg="/Users/yoonchulchung/Documents/2024Hanium/Server/NEw/Docker/docker-compose.yml: `version` is obsolete"
+time="2024-08-17T00:12:16+09:00" level=warning msg="Found orphan containers ([aeye_web_nginx aeye_web_back]) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container aeye_web_front  Created
+Attaching to aeye_web_front
+[2Kaeye_web_front  | 
+[2Kaeye_web_front  | > aeye@0.1.0 build
+[2Kaeye_web_front  | > next build
+[2Kaeye_web_front  | 
+[2Kaeye_web_front  | sh: next: not found
+aeye_web_front exited with code 127
