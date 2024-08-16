@@ -29,7 +29,7 @@ services:
       - "2000:2000"
     volumes:
       - ../AEYE_Router/AEYE_Router/:/app/
-    command: python3.6 manage.py runserver 0.0.0.0:2000
+    command: python3.8 manage.py runserver 0.0.0.0:2000
     networks:
       - aeye_web
   frontend:
