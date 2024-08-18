@@ -16,6 +16,7 @@ initiate_docker_compose()
 
 npm_install()
 {
+  apt install npm
   cd ../AEYE_Front/AEYE_Front/ && npm install
 }
 

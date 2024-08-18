@@ -1,0 +1,40 @@
+time="2024-08-18T10:51:52Z" level=warning msg="/home/ubuntu/AEYE-WEB/Docker/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+ Container aeye_web_front  Recreate
+ Container aeye_web_back  Recreate
+ Container aeye_web_front  Recreated
+ Container aeye_web_nginx  Recreate
+ Container aeye_web_nginx  Recreated
+ Container aeye_web_back  Recreated
+Attaching to aeye_web_back, aeye_web_front, aeye_web_nginx
+aeye_web_front  | 
+aeye_web_front  | > aeye@0.1.0 build
+aeye_web_front  | > next build
+aeye_web_front  | 
+aeye_web_front  | [1G[0Ksh: next: not found
+aeye_web_nginx  | /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+aeye_web_nginx  | /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+aeye_web_nginx  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+aeye_web_nginx  | 10-listen-on-ipv6-by-default.sh: info: Getting the checksum of /etc/nginx/conf.d/default.conf
+aeye_web_nginx  | 10-listen-on-ipv6-by-default.sh: info: /etc/nginx/conf.d/default.conf differs from the packaged version
+aeye_web_nginx  | /docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+aeye_web_nginx  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+aeye_web_nginx  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+aeye_web_nginx  | /docker-entrypoint.sh: Configuration complete; ready for start up
+aeye_web_front  | [1G[0K\[1G[0K
+aeye_web_nginx  | 2024/08/18 10:51:54 [notice] 1#1: using the "epoll" event method
+aeye_web_nginx  | 2024/08/18 10:51:54 [notice] 1#1: nginx/1.27.1
+aeye_web_nginx  | 2024/08/18 10:51:54 [notice] 1#1: built by gcc 13.2.1 20240309 (Alpine 13.2.1_git20240309) 
+aeye_web_nginx  | 2024/08/18 10:51:54 [notice] 1#1: OS: Linux 5.15.0-1065-aws
+aeye_web_nginx  | 2024/08/18 10:51:54 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+aeye_web_nginx  | 2024/08/18 10:51:54 [notice] 1#1: start worker processes
+aeye_web_nginx  | 2024/08/18 10:51:54 [notice] 1#1: start worker process 29
+aeye_web_nginx  | 2024/08/18 10:51:54 [notice] 1#1: start worker process 30
+[Kaeye_web_front exited with code 127
+aeye_web_back   | Watching for file changes with StatReloader
+aeye_web_back   | Performing system checks...
+aeye_web_back   | 
+aeye_web_back   | System check identified no issues (0 silenced).
+aeye_web_back   | August 18, 2024 - 10:51:54
+aeye_web_back   | Django version 3.2, using settings 'AEYE_Router.settings'
+aeye_web_back   | Starting development server at http://0.0.0.0:2000/
+aeye_web_back   | Quit the server with CONTROL-C.

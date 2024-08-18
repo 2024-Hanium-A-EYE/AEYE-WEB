@@ -16,6 +16,8 @@ services:
       - ../nginx.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - frontend
+    tty: true
+    stdin_open: true
     networks:
       - aeye_web
 
@@ -30,6 +32,8 @@ services:
     volumes:
       - ../AEYE_Router/:/app/
     command: python3.8 manage.py runserver 0.0.0.0:2000
+    tty: true
+    stdin_open: true
     networks:
       - aeye_web
   frontend:
@@ -43,6 +47,8 @@ services:
     volumes:
       - ../AEYE_Front/AEYE_Front/:/app/
     command: sh -c "npm run build && npm start"
+    tty: true
+    stdin_open: true
     networks:
       - aeye_web
 
