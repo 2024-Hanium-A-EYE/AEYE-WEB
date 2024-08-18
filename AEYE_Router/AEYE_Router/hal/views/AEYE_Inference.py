@@ -45,26 +45,12 @@ class aeye_inference_Viewswets(viewsets.ModelViewSet):
             url='{}{}'.format(server_url, api_ano)
             response = aeye_ai_inference_request(image_client, url)
 
-            
-            if response.status_code==200:
-                response_data  = response.json()
-                i_am_server    = response_data.get('whoami')
-                message_server = response_data.get('message')
+            data={
+                'whoami' : i_am_hal_infer,
+                'message': response
+            }
 
-                print_log('active', i_am_hal_infer, i_am_hal_infer, "Succed to Received Data from : {}, received : {}".format(url, message_server))
-                data={
-                    'whoami' : i_am_hal_infer,
-                    'message': message_server
-                }
-                return Response(data, status=status.HTTP_200_OK)
-            else:
-                message="Failed to Received Data from : {}".format(url)
-                print_log('error', i_am_hal_infer, i_am_hal_infer, message)
-                data={
-                    'whoami' : i_am_hal_infer,
-                    'message': message
-                }
-                return Response(data, status=status.HTTP_400_BAD_REQUEST)
+            return Response(data, status=status.HTTP_200_OK)
             
             
         else:
@@ -78,7 +64,7 @@ class aeye_inference_Viewswets(viewsets.ModelViewSet):
 
 
 
-def aeye_ai_inference_request(image, url)->Response:
+def aeye_ai_inference_request(image, url)->str:
 
     files = {
             'image': (image.name, image.read(), image.content_type),
@@ -91,4 +77,15 @@ def aeye_ai_inference_request(image, url)->Response:
     }
 
     print_log('active', i_am_hal_infer, i_am_hal_infer, "Send Data to : {}".format(url))
-    return requests.post(url, data=data, files=files)
+    response = requests.post(url, data=data, files=files)
+    
+    if response.status_code == 200:
+        response_data  = response.json()
+        i_am_server    = response_data.get('whoami')
+        message_server = response_data.get('message')
+
+        return message_server
+    else:
+        message="Failed to receive Data from : {}".format(url)
+        print_log('error', i_am_hal_infer, i_am_hal_infer, message)
+        return message
