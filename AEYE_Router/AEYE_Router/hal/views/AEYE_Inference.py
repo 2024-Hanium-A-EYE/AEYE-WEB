@@ -26,7 +26,7 @@ def print_log(status, whoami, hal, message) :
 
 i_am_hal_infer = 'Router HAL - Inference'
 
-server_url='http://http://13.209.24.64:3000/'
+server_url='http://13.209.24.64:3000/'
 api_ano='api/ai-network-operator/'
 
 class aeye_inference_Viewswets(viewsets.ModelViewSet):
@@ -39,7 +39,7 @@ class aeye_inference_Viewswets(viewsets.ModelViewSet):
         if serializer.is_valid() :
             i_am_client    = serializer.validated_data.get('whoami')
             message_client = serializer.validated_data.get('message')
-            print_log('active', i_am_client, i_am_hal_infer, "Succeed to Received Data : {}".format(message))
+            print_log('active', i_am_client, i_am_hal_infer, "Succeed to Received Data : {}".format(message_client))
 
             image_client = request.FILES.get('image')
             url='{}{}'.format(server_url, api_ano)

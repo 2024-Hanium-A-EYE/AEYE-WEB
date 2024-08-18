@@ -112,7 +112,7 @@ async def aeye_ai_inference_request(i_am_client : str, image):
         async with session.post(url, data=form_data) as response_from_server:
             result_from_server = await response_from_server.json()
 
-    return result_from_server
+            return result_from_server
 
 
 def aeye_database_requst(operation_client):
