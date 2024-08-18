@@ -163,7 +163,7 @@ install() {
     }'
     sudo systemctl restart docker
 
-    cd Docker && ./install && ./run
+    cd Docker && ./install.sh && ./run.sh
   else
     echo -e "${RED}[3/$total_progress] ${NC}Failed to install Nvidia Docker due to install_status_vel = 1"
   fi
