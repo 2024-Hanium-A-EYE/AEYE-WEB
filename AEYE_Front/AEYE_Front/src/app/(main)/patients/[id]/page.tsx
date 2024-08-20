@@ -4,40 +4,47 @@ import Image from "next/image";
 import CheckupList from "@/components/patients/CheckupList";
 import { type Metadata } from "next";
 
-export async function generateStaticParams() { 
+import { promises as fs } from 'fs';
+import { join } from 'path';
+const jsonFilePath = join(process.cwd(), 'src', 'database', 'patients.json');
 
-  if (process.env.NODE_ENV === "production") {
-    return [];
-  }
+////////////////////////////////////////////////////////////////////////
 
+const fetchPatientById = async (id: string): Promise<Patient | null> => {
   try {
-    const patients: Patient[] = await fetch("http://localhost:3000/api/patients")
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error('Failed to fetch');
-        }
-        return res.json();  // 여기에서 반환된 JSON 데이터를 반환
-      });
+    const patients = await getAllPatients();
+    const patient = patients.find((patient) => patient.id.toString() === id);
+    return patient || null;
+  } catch (error) {
+    console.error(`Failed to fetch patient with ID ${id}:`, error);
+    return null;
+  }
+};
+
+const getAllPatients = async (): Promise<Patient[]> => {
+  try {
+    const data = await fs.readFile(jsonFilePath, 'utf-8');
+    return JSON.parse(data) as Patient[];
+  } catch (error) {
+    console.error('Failed to read patients JSON file:', error);
+    throw new Error('Failed to load patient data');
+  }
+};
+
+export async function generateStaticParams() {
+  try {
+    const patients = await getAllPatients();
 
     return patients.map((patient) => ({
       id: patient.id.toString(),
     }));
-
   } catch (error) {
-    console.error("Error fetching patients:", error);
-    // 에러가 발생할 경우 빈 배열을 반환
+    console.error("Error reading patients JSON:", error);
     return [];
   }
 }
-  
 
-const fetchPatientById = async (id: string): Promise<Patient | null> => {
-  const res = await fetch(`http://localhost:3000/api/patients/${id}`);
-  if (!res.ok) {
-    return null;
-  }
-  return res.json();
-};
+
 
 // Metadata를 동적으로 생성
 export async function generateMetadata({
