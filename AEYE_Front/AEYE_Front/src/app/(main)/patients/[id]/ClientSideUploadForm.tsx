@@ -35,54 +35,64 @@ function getRandomDiagnosis() {
   return diagnoses[randomIndex];
 }
 
+
 const ClientSideUploadForm = () => {
-    const [isLoading, setLoading] = useState(false);
-    const [currentLoadingState, setCurrentLoadingState] = useState(0);
-  
-    useEffect(() => {
-      let socket: WebSocket;
-  
-      if (isLoading) {
-        socket = new WebSocket('ws://0.0.0.0:2000/logs'); // WebSocket 서버 URL
-        socket.onmessage = (event) => {
-          const logMessage = event.data;
-  
-          if (logMessage.includes('AI 서버에 연결중')) {
-            setCurrentLoadingState(0);
-          } else if (logMessage.includes('사진을 분석중')) {
-            setCurrentLoadingState(1);
-          } else if (logMessage.includes('사진을 토대로 진단')) {
-            setCurrentLoadingState(2);
-          } else if (logMessage.includes('거의 다 왔어요')) {
-            setCurrentLoadingState(3);
-          } else if (logMessage.includes('AI 진단이 완료되었어요')) {
-            setCurrentLoadingState(4);
+  const [isLoading, setLoading] = useState(false);
+  const [currentLoadingState, setCurrentLoadingState] = useState(0);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+
+    if (isLoading) {
+      setCurrentLoadingState(0);  // 초기화 필요
+      timer = setInterval(() => {
+        setCurrentLoadingState((prev) => {
+          if (prev < loadingStates.length - 1) {
+            return prev + 1;
+          } else {
+            clearInterval(timer);
             setLoading(false); // 로딩 완료 후 종료
+            return prev;
           }
-        };
-  
-        socket.onerror = (error) => {
-          console.error('WebSocket error:', error);
-        };
-      }
-  
-      return () => {
-        if (socket) {
-          socket.close();
-        }
-      };
-    }, [isLoading]);
-  
+        });
+      }, 1000); // 1초 간격으로 로딩 상태 업데이트
+    }
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [isLoading]);
+
     const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0];
       if (file) {
+        
+        const jsonData = {
+          whoami: 'NextJS',
+          message: 'Request AEYE Inference',
+          operation: 'Inference',
+        };
+        
+        // FormData 대신, JSON 데이터를 직접 요청의 body에 추가
         const formData = new FormData();
-        formData.append('image', file);
-  
-        setLoading(true); // 로딩 상태 시작
-  
+        
+        const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+
+      if (fileInput && fileInput.files && fileInput.files.length > 0) {
+        formData.append('file', fileInput.files[0]);  // 선택된 파일 추가
+        } else {
+        console.error('File input element not found or no files selected');
+        }
+        
+        // JSON 데이터를 FormData에 추가 (key-value 방식)
+        for (const [key, value] of Object.entries(jsonData)) {
+          formData.append(key, value);
+        }
+        
+        setLoading(true);  // 로딩 상태 시작
+
         try {
-          const response = await fetch('http://0.0.0.0:2000/api/', {
+          const response = await fetch('http://0.0.0.0:2000/api/web-network-operator/', {
             method: 'POST',
             body: formData,
           });

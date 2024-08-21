@@ -28,7 +28,7 @@ def print_log(status, whoami, api, message) :
 
 i_am_api_wno = 'Router API - WNO'
 
-url_server       = 'http://127.0.0.1:2000/'
+url_server       = 'http://0.0.0.0:2000/'
 mw_ai_inference  = 'mw/ai-inference/'
 mw_database      = 'mw/database/'
 
@@ -45,10 +45,18 @@ class aeye_wno_Viewsets(viewsets.ModelViewSet):
             message_client   = serializer.validated_data.get('message')
 
             print_log('active', i_am_api_wno, i_am_api_wno, 'Received Valid Data : {}, Oper: {}'.format(message_client, operation_client))
-            
-            if operation_client=='Inference' :
-                image = request.FILES.get('image')
+            print_log('active', i_am_api_wno, i_am_api_wno, 'Received Valid Data : {}'.format(request.FILES))
 
+            image = request.FILES.get('file')
+
+            if image is None:
+                print_log('error', i_am_api_wno, i_am_api_wno, 'Failed to receive Image')
+
+                return Response({'error': 'No image file provided'}, status=400)
+
+            if operation_client=='Inference' :
+                image = request.FILES.get('file')
+                
                 loop = asyncio.new_event_loop()
                 asyncio.set_event_loop(loop)
                 response_from_server = loop.run_until_complete(aeye_ai_inference_request(i_am_client, image))
@@ -108,8 +116,10 @@ async def aeye_ai_inference_request(i_am_client : str, image):
         form_data = aiohttp.FormData()
         form_data.add_field('whoami', i_am_api_wno)
         form_data.add_field('message', message)
+
         form_data.add_field('image', image.read(), filename=image.name, content_type=image.content_type)
-        async with session.post(url, data=form_data) as response_from_server:
+        
+        async with session.post(url, data=form_data) as response_from_server:            
             result_from_server = await response_from_server.json()
 
             return result_from_server
