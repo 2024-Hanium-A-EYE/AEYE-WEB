@@ -31,11 +31,21 @@ services:
       - "2000:2000"
     volumes:
       - ../AEYE_Router/:/app/
-    command: python3.8 manage.py runserver 0.0.0.0:2000
+    command: sh -c "python3.8 manage.py makemigrations &&
+             python3.8 manage.py migrate &&
+             python3.8 manage.py runserver 0.0.0.0:2000"
     tty: true
     stdin_open: true
     networks:
       - aeye_web
+    depends_on:
+      - db
+    environment:
+      - DB_NAME=mydatabase
+      - DB_USER=myuser
+      - DB_PASSWORD=mypassword
+      - DB_HOST=db
+      - DB_PORT=3306
     
   frontend:
     build:
@@ -52,7 +62,25 @@ services:
     stdin_open: true
     networks:
       - aeye_web
+  
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - ../AEYE_SQL/:/var/lib/mysql
+    networks:
+      - aeye_web
 
 networks:
   aeye_web:
     driver: bridge
+
+volumes:
+  db_data:

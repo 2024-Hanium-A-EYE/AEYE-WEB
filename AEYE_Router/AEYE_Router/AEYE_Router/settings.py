@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-r0d%!ucte=53y^3eddn^fktl9@f*6q2qy9)b01@jgc$va%z*t-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["ai-aeye.com", "127.0.0.1", "15.164.173.15"]
+ALLOWED_HOSTS = ["ai-aeye.com", "127.0.0.1", "15.164.173.15", "0.0.0.0"]
 
 
 MEDIA_URL = '/media/'
@@ -83,12 +83,15 @@ WSGI_APPLICATION = 'AEYE_Router.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
     }
-
+}
 
 
 # Password validation

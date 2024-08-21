@@ -2,8 +2,8 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework import viewsets
 from rest_framework import status
-from .models import aeye_database_read_models
-from .serializers import aeye_database_read_serializers
+from .models import aeye_database_read_models, aeye_database_list_models
+from .serializers import aeye_database_read_serializers, aeye_database_list_serializers
 from colorama import Fore, Back, Style
 from datetime import datetime
 import requests
@@ -30,39 +30,10 @@ server_url=''
 api_ano=''
 
 class aeye_database_read_Viewswets(viewsets.ModelViewSet):
-    queryset=aeye_database_read_models.objects.all().order_by('id')
-    serializer_class=aeye_database_read_serializers
+    queryset = aeye_database_list_models.objects.all()
+    serializer_class = aeye_database_list_serializers
 
-    def create(self, request) :
-        serializer = aeye_database_read_serializers(data = request.data)
-
-        if serializer.is_valid() :
-            whoami    = serializer.validated_data.get('whoami')
-            message   = serializer.validated_data.get('message')
-            print_log('active', whoami, i_am_hal_read_data, "Succeed to Received Data : {}".format(message))
-
-
-            ###########################################
-            # MySQL Connection
-            
-            message="GOOD"
-            data={
-                'whoami' : i_am_hal_read_data,
-                'message': message
-            }
-
-            return Response(data, status=status.HTTP_200_OK)
-
-
-
-
-        else:
-            message = serializer.errors
-            print_log('error', i_am_hal_read_data, i_am_hal_read_data, "Failed to Received Data : {}".format(message))
-
-            message = "Failed to Write Data in DataBase"
-            data={
-                'whoami'  : i_am_hal_read_data,
-                'message' : message
-            }
-            return Response(data, status=status.HTTP_400_BAD_REQUEST)
+    def list(self, request):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

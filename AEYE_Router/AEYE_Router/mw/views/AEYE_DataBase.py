@@ -26,9 +26,9 @@ def print_log(status, whoami, mw, message) :
 
 i_am_mw_database = 'Router MW - DataBase'
 
-server_url     = 'http://127.0.0.1:2000/'
-hal_data_write = 'hal/database-write/'
-hal_data_read  = 'hal/database-read/'
+server_url          = 'http://127.0.0.1:2000/'
+hal_data_write_list = 'hal/database-write-list/'
+hal_data_read       = 'hal/database-read/'
 
 
 class aeye_database_Viewsets(viewsets.ModelViewSet):
@@ -47,18 +47,18 @@ class aeye_database_Viewsets(viewsets.ModelViewSet):
 
             # save Image
 
-            if operation_client=='DataBase Write':
+            if operation_client=='DataBase Write List':
                 message="Client Requested : {}".format(operation_client)
                 print_log('active', i_am_client, i_am_mw_database, message)
 
-                reponse_server = aeye_request_database_write(request_data_client)
+                reponse_server = aeye_request_database_write_list(request_data_client)
 
                 if reponse_server.status_code==200:
                     response_data  = reponse_server.json()
                     i_am_server    = response_data.get('whoami')
                     message_server = response_data.get('message')
 
-                    print_log('active', i_am_mw_database, i_am_mw_database, "Succeed to Reacive data from : {}{}".format(server_url, hal_data_write))
+                    print_log('active', i_am_mw_database, i_am_mw_database, "Succeed to Reacive data from : {}{}".format(server_url, hal_data_write_list))
 
                     message='Succedd to read_data'
                     data={
@@ -68,7 +68,7 @@ class aeye_database_Viewsets(viewsets.ModelViewSet):
 
                     return Response(data, status=status.HTTP_200_OK)
                 else:
-                    message="Failed to Reacive data from : {}{}".format(server_url, hal_data_write)
+                    message="Failed to Reacive data from : {}{}".format(server_url, hal_data_write_list)
                     print_log('active', i_am_mw_database, i_am_mw_database, message)
                     data={
                         'whoami' : i_am_mw_database,
@@ -119,14 +119,14 @@ class aeye_database_Viewsets(viewsets.ModelViewSet):
             return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
 
-def aeye_request_database_write(request_data_client : str):
+def aeye_request_database_write_list(request_data_client : str):
     message='Request to write data in SQL'
     data={
         'whoami'       : i_am_mw_database,
         'message'      : message,
         'request_data' : request_data_client
     }
-    url='{}{}'.format(server_url, hal_data_read)
+    url='{}{}'.format(server_url, hal_data_write_list)
     reponse_server=requests.post(url, data=data)
 
     return reponse_server
