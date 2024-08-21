@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import React from 'react';
 import { Report } from "@/types";
 import { MultiStepLoader as Loader } from "@/components/ui/multi-step-loader";
+import { useRouter } from 'next/navigation';  // useRouter는 클라이언트 사이드에서만 동작
 
 const loadingStates = [
   { text: "AI 서버에 연결중이에요..." },
@@ -36,9 +37,11 @@ function getRandomDiagnosis() {
 }
 
 
-const ClientSideUploadForm = () => {
+const ClientSideUploadForm = ({ patientId }: { patientId: string }) => {
   const [isLoading, setLoading] = useState(false);
   const [currentLoadingState, setCurrentLoadingState] = useState(0);
+
+  const router = useRouter();  // useRouter는 클라이언트 사이드에서만 사용됩니다.
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -52,6 +55,8 @@ const ClientSideUploadForm = () => {
           } else {
             clearInterval(timer);
             setLoading(false); // 로딩 완료 후 종료
+            router.push(`/patients/${patientId}/analysis`);
+
             return prev;
           }
         });
@@ -61,7 +66,7 @@ const ClientSideUploadForm = () => {
     return () => {
       clearInterval(timer);
     };
-  }, [isLoading]);
+  }, [isLoading, router, patientId]);
 
     const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0];

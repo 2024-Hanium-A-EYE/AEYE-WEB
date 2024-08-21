@@ -88,7 +88,7 @@ const PatientDetailPage = async ({ params }: { params: { id: string } }) => {
         </div>
       </section>
       {/* 파일 업로드 폼은 클라이언트 컴포넌트로 이동 */}
-      <ClientSideUploadForm />
+      <ClientSideUploadForm patientId={params.id} />
       <div className="h-20" />
       <section>
         <h2 className="mb-8 text-xl">날짜별 진료기록</h2>
