@@ -3,12 +3,11 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import CheckupList from "@/components/patients/CheckupList";
 import { type Metadata } from "next";
-
 import { promises as fs } from 'fs';
 import { join } from 'path';
-const jsonFilePath = join(process.cwd(), 'src', 'database', 'patients.json');
+import ClientSideUploadForm from './ClientSideUploadForm'; // 클라이언트 컴포넌트 임포트
 
-////////////////////////////////////////////////////////////////////////
+const jsonFilePath = join(process.cwd(), 'src', 'database', 'patients.json');
 
 const fetchPatientById = async (id: string): Promise<Patient | null> => {
   try {
@@ -44,9 +43,6 @@ export async function generateStaticParams() {
   }
 }
 
-
-
-// Metadata를 동적으로 생성
 export async function generateMetadata({
   params,
 }: {
@@ -65,16 +61,17 @@ const PatientDetailPage = async ({ params }: { params: { id: string } }) => {
   if (!patient) {
     notFound();
   }
+
   return (
     <main className="m-auto max-w-[1440px] px-8 pb-10">
       <section>
         <h1 className="mb-12 text-3xl font-semibold">{`${patient.name} 님의 진료 기록`}</h1>
-        <div className="flex h-40 w-full gap-10 rounded-xl border p-5">
+        <div className="relative flex h-40 w-full gap-10 rounded-xl border p-5">
           <div className="relative size-28 overflow-hidden rounded-full">
             <Image
               src={patient.profileImage}
               alt="환자 사진"
-              fill
+              layout="fill"
               className="object-cover"
             />
           </div>
@@ -90,6 +87,8 @@ const PatientDetailPage = async ({ params }: { params: { id: string } }) => {
           </p>
         </div>
       </section>
+      {/* 파일 업로드 폼은 클라이언트 컴포넌트로 이동 */}
+      <ClientSideUploadForm />
       <div className="h-20" />
       <section>
         <h2 className="mb-8 text-xl">날짜별 진료기록</h2>
