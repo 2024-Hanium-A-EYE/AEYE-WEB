@@ -31,11 +31,9 @@ services:
       - "2000:2000"
     volumes:
       - ../AEYE_Router/:/app/
-    command: daphne -b 0.0.0.0 -p 2000 AEYE_Router.asgi:application
+    command: python3.8 manage.py runserver 0.0.0.0:2000
     tty: true
     stdin_open: true
-    depends_on:
-      - redis
     networks:
       - aeye_web
     
@@ -52,13 +50,6 @@ services:
     command: sh -c "npm run build && npm start"
     tty: true
     stdin_open: true
-    networks:
-      - aeye_web
-
-  redis:
-    image: "redis:alpine"
-    ports:
-      - "6379:6379"
     networks:
       - aeye_web
 

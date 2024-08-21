@@ -45,20 +45,8 @@ INSTALLED_APPS = [
     'mw',
     'api',
     'rest_framework',
-    'channels',
 ]
 
-# Custom Added
-ASGI_APPLICATION = 'AEYE_Router.asgi.application'  
-
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [('redis', 6379)],
-        },
-    },
-}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
