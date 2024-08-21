@@ -11,3 +11,10 @@ class aeye_wno_models (models.Model):
 
     def __str__(self):
         return self.name
+    
+class aeye_wlh_models (models.Model):
+    whoami    = models.CharField(max_length=40)
+    message   = models.CharField(max_length=40)
+
+    def __str__(self):
+        return self.name

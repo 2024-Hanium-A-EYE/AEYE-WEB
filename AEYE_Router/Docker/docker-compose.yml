@@ -13,7 +13,7 @@ services:
     - ../AEYE_Router/:/app/AEYE_Router
     networks:
       - aeye_network
-    command: python manage.py runserver 0.0.0.0:2000
+    command: daphne -p 2000 AEYE_Router.asgi:application
   AEYE-SQL:
     image: mysql:5.7
     container_name: web_sql_container

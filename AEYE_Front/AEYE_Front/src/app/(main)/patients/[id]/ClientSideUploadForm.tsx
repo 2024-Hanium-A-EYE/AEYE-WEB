@@ -1,7 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
 import React from 'react';
-import LogPopup from "@/components/patients/LogPopup";
 import { Report } from "@/types";
 import { MultiStepLoader as Loader } from "@/components/ui/multi-step-loader";
 

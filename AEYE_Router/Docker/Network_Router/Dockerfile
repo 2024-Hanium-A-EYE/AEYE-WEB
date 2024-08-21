@@ -38,4 +38,4 @@ COPY /AEYE_Router/ /app/AEYE_Router
 
 EXPOSE 2000
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:2000"]
+CMD ["daphne", "-p", "AEYE_Router.asgi:application"]

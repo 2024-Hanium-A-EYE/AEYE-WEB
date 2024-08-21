@@ -34,7 +34,7 @@ mw_database      = 'mw/database/'
 
 class aeye_wno_Viewsets(viewsets.ModelViewSet):
     queryset=aeye_wno_models.objects.all().order_by('id')
-    serializer_class=aeye_wno_models
+    serializer_class=aeye_wno_serializers
 
     def create(self, request) :
         serializer = aeye_wno_serializers(data = request.data)

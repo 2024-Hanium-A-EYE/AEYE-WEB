@@ -6,10 +6,10 @@
 #############################################################
 
 # Django Web Framework
-Django==3.2
+Django==4.2.*
 
 # REST API Framework
-djangorestframework==3.13.1
+djangorestframework==3.15.0
 
 # request
 requests
@@ -36,3 +36,6 @@ asyncio
 aiohttp
 
 setuptools
+
+channels
+daphne

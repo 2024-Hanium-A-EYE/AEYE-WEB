@@ -1,40 +1,220 @@
-time="2024-08-18T10:51:52Z" level=warning msg="/home/ubuntu/AEYE-WEB/Docker/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
- Container aeye_web_front  Recreate
- Container aeye_web_back  Recreate
- Container aeye_web_front  Recreated
- Container aeye_web_nginx  Recreate
- Container aeye_web_nginx  Recreated
- Container aeye_web_back  Recreated
-Attaching to aeye_web_back, aeye_web_front, aeye_web_nginx
-aeye_web_front  | 
-aeye_web_front  | > aeye@0.1.0 build
-aeye_web_front  | > next build
-aeye_web_front  | 
-aeye_web_front  | [1G[0Ksh: next: not found
-aeye_web_nginx  | /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
-aeye_web_nginx  | /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
-aeye_web_nginx  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
-aeye_web_nginx  | 10-listen-on-ipv6-by-default.sh: info: Getting the checksum of /etc/nginx/conf.d/default.conf
-aeye_web_nginx  | 10-listen-on-ipv6-by-default.sh: info: /etc/nginx/conf.d/default.conf differs from the packaged version
-aeye_web_nginx  | /docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
-aeye_web_nginx  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
-aeye_web_nginx  | /docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
-aeye_web_nginx  | /docker-entrypoint.sh: Configuration complete; ready for start up
-aeye_web_front  | [1G[0K\[1G[0K
-aeye_web_nginx  | 2024/08/18 10:51:54 [notice] 1#1: using the "epoll" event method
-aeye_web_nginx  | 2024/08/18 10:51:54 [notice] 1#1: nginx/1.27.1
-aeye_web_nginx  | 2024/08/18 10:51:54 [notice] 1#1: built by gcc 13.2.1 20240309 (Alpine 13.2.1_git20240309) 
-aeye_web_nginx  | 2024/08/18 10:51:54 [notice] 1#1: OS: Linux 5.15.0-1065-aws
-aeye_web_nginx  | 2024/08/18 10:51:54 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
-aeye_web_nginx  | 2024/08/18 10:51:54 [notice] 1#1: start worker processes
-aeye_web_nginx  | 2024/08/18 10:51:54 [notice] 1#1: start worker process 29
-aeye_web_nginx  | 2024/08/18 10:51:54 [notice] 1#1: start worker process 30
-[Kaeye_web_front exited with code 127
-aeye_web_back   | Watching for file changes with StatReloader
-aeye_web_back   | Performing system checks...
-aeye_web_back   | 
-aeye_web_back   | System check identified no issues (0 silenced).
-aeye_web_back   | August 18, 2024 - 10:51:54
-aeye_web_back   | Django version 3.2, using settings 'AEYE_Router.settings'
-aeye_web_back   | Starting development server at http://0.0.0.0:2000/
-aeye_web_back   | Quit the server with CONTROL-C.
+time="2024-08-21T14:51:26+09:00" level=warning msg="/Users/yoonchulchung/Downloads/AEYE-WEB-main/AEYE-WEB-main/Docker/docker-compose.yml: `version` is obsolete"
+ Container aeye_web_front  Running
+ Container docker-redis-1  Created
+ Container aeye_web_nginx  Running
+ Container aeye_web_back  Created
+Attaching to aeye_web_back, aeye_web_front, aeye_web_nginx, redis-1
+[2Kredis-1         | 1:C 21 Aug 2024 05:51:26.150 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+[2Kredis-1         | 1:C 21 Aug 2024 05:51:26.150 * Redis version=7.4.0, bits=64, commit=00000000, modified=0, pid=1, just started
+[2Kredis-1         | 1:C 21 Aug 2024 05:51:26.150 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+[2Kredis-1         | 1:M 21 Aug 2024 05:51:26.150 * monotonic clock: POSIX clock_gettime
+[2Kredis-1         | 1:M 21 Aug 2024 05:51:26.151 * Running mode=standalone, port=6379.
+[2Kredis-1         | 1:M 21 Aug 2024 05:51:26.152 * Server initialized
+[2Kredis-1         | 1:M 21 Aug 2024 05:51:26.152 * Loading RDB produced by version 7.4.0
+[2Kredis-1         | 1:M 21 Aug 2024 05:51:26.152 * RDB age 4 seconds
+[2Kredis-1         | 1:M 21 Aug 2024 05:51:26.152 * RDB memory usage when created 1.06 Mb
+[2Kredis-1         | 1:M 21 Aug 2024 05:51:26.152 * Done loading RDB, keys loaded: 0, keys expired: 0.
+[2Kredis-1         | 1:M 21 Aug 2024 05:51:26.152 * DB loaded from disk: 0.000 seconds
+[2Kredis-1         | 1:M 21 Aug 2024 05:51:26.152 * Ready to accept connections tcp
+[2Kaeye_web_back   | 2024-08-21 05:51:26,770 INFO     Starting server at tcp:port=2000:interface=0.0.0.0
+[2Kaeye_web_back   | 2024-08-21 05:51:26,770 INFO     HTTP/2 support not enabled (install the http2 and tls Twisted extras)
+[2Kaeye_web_back   | 2024-08-21 05:51:26,770 INFO     Configuring endpoint tcp:port=2000:interface=0.0.0.0
+[2Kaeye_web_back   | 2024-08-21 05:51:26,771 INFO     Listening on TCP address 0.0.0.0:2000
+[2Kaeye_web_back   | 192.168.65.1:58965 - - [21/Aug/2024:05:51:30] "WSCONNECTING /ws/web-websocket-log/" - -
+[2Kaeye_web_back   | 192.168.65.1:58965 - - [21/Aug/2024:05:51:30] "WSCONNECT /ws/web-websocket-log/" - -
+[2Kaeye_web_back   | 
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 2024-08-21 05:51:32 [ Router API - WNO ] send to : [34m[ Router API - WNO ]
+[2Kaeye_web_back   | [39m[32m[active] [39mmessage: [ [32mClient Sent to WS         'message': 'Hello, server!'
+[2Kaeye_web_back   |          ][39m
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 2024-08-21 05:51:42 [ Router API - WNO ] send to : [34m[ Router API - WNO ]
+[2Kaeye_web_back   | [39m[32m[active] [39mmessage: [ [32mClient Sent to WS {        'message': 'Hello, server!'}
+[2Kaeye_web_back   |          ][39m
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 2024-08-21 05:52:07 [ Router API - WNO ] send to : [34m[ Router API - WNO ]
+[2Kaeye_web_back   | [39m[32m[active] [39mmessage: [ [32mClient Sent to WS {        'message': 'Hello, server!'}
+[2Kaeye_web_back   |          ][39m
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 2024-08-21 05:52:41 [ Router API - WNO ] send to : [34m[ Router API - WNO ]
+[2Kaeye_web_back   | [39m[32m[active] [39mmessage: [ [32mClient Sent to WS {
+[2Kaeye_web_back   |     'message': 'Hello, server!'
+[2Kaeye_web_back   | } ][39m
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 2024-08-21 05:52:46 [ Router API - WNO ] send to : [34m[ Router API - WNO ]
+[2Kaeye_web_back   | [39m[32m[active] [39mmessage: [ [32mClient Sent to WS {
+[2Kaeye_web_back   |     'message': 'Hello, server!'
+[2Kaeye_web_back   | } ][39m
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 2024-08-21 05:52:52 [ Router API - WNO ] send to : [34m[ Router API - WNO ]
+[2Kaeye_web_back   | [39m[32m[active] [39mmessage: [ [32mClient Sent to WS {
+[2Kaeye_web_back   |     'message': 'Hello, server!'
+[2Kaeye_web_back   | } ][39m
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 2024-08-21 05:53:01 [ Router API - WNO ] send to : [34m[ Router API - WNO ]
+[2Kaeye_web_back   | [39m[32m[active] [39mmessage: [ [32mClient Sent to WS {
+[2Kaeye_web_back   |     'message': 'Hello, server!',
+[2Kaeye_web_back   | } ][39m
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 2024-08-21 05:53:07 [ Router API - WNO ] send to : [34m[ Router API - WNO ]
+[2Kaeye_web_back   | [39m[32m[active] [39mmessage: [ [32mClient Sent to WS 'message': 'Hello, server!',
+[2Kaeye_web_back   |  ][39m
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 2024-08-21 05:53:13 [ Router API - WNO ] send to : [34m[ Router API - WNO ]
+[2Kaeye_web_back   | [39m[32m[active] [39mmessage: [ [32mClient Sent to WS 'message': 'Hello, server!',
+[2Kaeye_web_back   |  ][39m
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 2024-08-21 05:53:13 [ Router API - WNO ] send to : [34m[ Router API - WNO ]
+[2Kaeye_web_back   | [39m[32m[active] [39mmessage: [ [32mClient Sent to WS 'message': 'Hello, server!',
+[2Kaeye_web_back   |  ][39m
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 2024-08-21 05:53:13 [ Router API - WNO ] send to : [34m[ Router API - WNO ]
+[2Kaeye_web_back   | [39m[32m[active] [39mmessage: [ [32mClient Sent to WS 'message': 'Hello, server!',
+[2Kaeye_web_back   |  ][39m
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 2024-08-21 05:53:15 [ Router API - WNO ] send to : [34m[ Router API - WNO ]
+[2Kaeye_web_back   | [39m[32m[active] [39mmessage: [ [32mClient Sent to WS 'message': 'Hello, server!',
+[2Kaeye_web_back   |  ][39m
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 2024-08-21 05:53:16 [ Router API - WNO ] send to : [34m[ Router API - WNO ]
+[2Kaeye_web_back   | [39m[32m[active] [39mmessage: [ [32mClient Sent to WS 'message': 'Hello, server!',
+[2Kaeye_web_back   |  ][39m
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 2024-08-21 05:53:16 [ Router API - WNO ] send to : [34m[ Router API - WNO ]
+[2Kaeye_web_back   | [39m[32m[active] [39mmessage: [ [32mClient Sent to WS 'message': 'Hello, server!',
+[2Kaeye_web_back   |  ][39m
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 2024-08-21 05:53:16 [ Router API - WNO ] send to : [34m[ Router API - WNO ]
+[2Kaeye_web_back   | [39m[32m[active] [39mmessage: [ [32mClient Sent to WS 'message': 'Hello, server!',
+[2Kaeye_web_back   |  ][39m
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 2024-08-21 05:53:16 [ Router API - WNO ] send to : [34m[ Router API - WNO ]
+[2Kaeye_web_back   | [39m[32m[active] [39mmessage: [ [32mClient Sent to WS 'message': 'Hello, server!',
+[2Kaeye_web_back   |  ][39m
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 2024-08-21 05:53:16 [ Router API - WNO ] send to : [34m[ Router API - WNO ]
+[2Kaeye_web_back   | [39m[32m[active] [39mmessage: [ [32mClient Sent to WS 'message': 'Hello, server!',
+[2Kaeye_web_back   |  ][39m
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 2024-08-21 05:53:17 [ Router API - WNO ] send to : [34m[ Router API - WNO ]
+[2Kaeye_web_back   | [39m[32m[active] [39mmessage: [ [32mClient Sent to WS 'message': 'Hello, server!',
+[2Kaeye_web_back   |  ][39m
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 2024-08-21 05:53:17 [ Router API - WNO ] send to : [34m[ Router API - WNO ]
+[2Kaeye_web_back   | [39m[32m[active] [39mmessage: [ [32mClient Sent to WS 'message': 'Hello, server!',
+[2Kaeye_web_back   |  ][39m
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 2024-08-21 05:53:17 [ Router API - WNO ] send to : [34m[ Router API - WNO ]
+[2Kaeye_web_back   | [39m[32m[active] [39mmessage: [ [32mClient Sent to WS 'message': 'Hello, server!',
+[2Kaeye_web_back   |  ][39m
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 2024-08-21 05:53:18 [ Router API - WNO ] send to : [34m[ Router API - WNO ]
+[2Kaeye_web_back   | [39m[32m[active] [39mmessage: [ [32mClient Sent to WS 'message': 'Hello, server!',
+[2Kaeye_web_back   |  ][39m
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 2024-08-21 05:53:18 [ Router API - WNO ] send to : [34m[ Router API - WNO ]
+[2Kaeye_web_back   | [39m[32m[active] [39mmessage: [ [32mClient Sent to WS 'message': 'Hello, server!',
+[2Kaeye_web_back   |  ][39m
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 2024-08-21 05:53:19 [ Router API - WNO ] send to : [34m[ Router API - WNO ]
+[2Kaeye_web_back   | [39m[32m[active] [39mmessage: [ [32mClient Sent to WS 'message': 'Hello, server!',
+[2Kaeye_web_back   |  ][39m
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 2024-08-21 05:53:19 [ Router API - WNO ] send to : [34m[ Router API - WNO ]
+[2Kaeye_web_back   | [39m[32m[active] [39mmessage: [ [32mClient Sent to WS 'message': 'Hello, server!',
+[2Kaeye_web_back   |  ][39m
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 2024-08-21 05:53:20 [ Router API - WNO ] send to : [34m[ Router API - WNO ]
+[2Kaeye_web_back   | [39m[32m[active] [39mmessage: [ [32mClient Sent to WS 'message': 'Hello, server!',
+[2Kaeye_web_back   |  ][39m
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 2024-08-21 05:53:21 [ Router API - WNO ] send to : [34m[ Router API - WNO ]
+[2Kaeye_web_back   | [39m[32m[active] [39mmessage: [ [32mClient Sent to WS 'message': 'Hello, server!',
+[2Kaeye_web_back   |  ][39m
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 2024-08-21 05:53:21 [ Router API - WNO ] send to : [34m[ Router API - WNO ]
+[2Kaeye_web_back   | [39m[32m[active] [39mmessage: [ [32mClient Sent to WS 'message': 'Hello, server!',
+[2Kaeye_web_back   |  ][39m
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 2024-08-21 05:53:21 [ Router API - WNO ] send to : [34m[ Router API - WNO ]
+[2Kaeye_web_back   | [39m[32m[active] [39mmessage: [ [32mClient Sent to WS 'message': 'Hello, server!',
+[2Kaeye_web_back   |  ][39m
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 2024-08-21 05:53:21 [ Router API - WNO ] send to : [34m[ Router API - WNO ]
+[2Kaeye_web_back   | [39m[32m[active] [39mmessage: [ [32mClient Sent to WS 'message': 'Hello, server!',
+[2Kaeye_web_back   |  ][39m
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 2024-08-21 05:53:21 [ Router API - WNO ] send to : [34m[ Router API - WNO ]
+[2Kaeye_web_back   | [39m[32m[active] [39mmessage: [ [32mClient Sent to WS 'message': 'Hello, server!',
+[2Kaeye_web_back   |  ][39m
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 2024-08-21 05:53:21 [ Router API - WNO ] send to : [34m[ Router API - WNO ]
+[2Kaeye_web_back   | [39m[32m[active] [39mmessage: [ [32mClient Sent to WS 'message': 'Hello, server!',
+[2Kaeye_web_back   |  ][39m
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 
+[2Kaeye_web_back   | -----------------------------------------
+[2Kaeye_web_back   | 2024-08-21 05:53:22 [ Router API - WNO ] send to : [34m[ Router API - WNO ]
+[2Kaeye_web_back   | [39m[32m[active] [39mmessage: [ [32mClient Sent to WS 'message': 'Hello, server!',
+[2Kaeye_web_back   |  ][39m
+[2Kaeye_web_back   | -----------------------------------------

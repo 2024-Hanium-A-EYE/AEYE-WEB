@@ -28,8 +28,11 @@ colorama
 
 # pillow
 pillow
+channels_redis
 
 asyncio
 aiohttp
 
 setuptools
+channels
+daphne
