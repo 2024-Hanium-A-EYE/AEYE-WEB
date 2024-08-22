@@ -76,6 +76,7 @@ services:
       - "3306:3306"
     volumes:
       - ../AEYE_SQL/:/var/lib/mysql
+      - ./AEYE_SQL_Config/my.cnf:/etc/mysql/conf.d/my.cnf 
     networks:
       - aeye_web
 
