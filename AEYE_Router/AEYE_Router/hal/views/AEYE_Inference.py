@@ -43,16 +43,35 @@ class aeye_inference_Viewswets(viewsets.ModelViewSet):
 
             image_client = request.FILES.get('image')
             url='{}{}'.format(server_url, api_ano)
-            response = aeye_ai_inference_request(image_client, url)
-
-            data={
-                'whoami' : i_am_hal_infer,
-                'message': response
-            }
-
-            return Response(data, status=status.HTTP_200_OK)
+            response_server = aeye_ai_inference_request(image_client, url)
             
-            
+            if response_server.status_code == 200:
+                server_data = response_server.json()
+                
+                i_am_server    = server_data.get('whoami')
+                message_server = server_data.get('message')
+                ai_result      = server_data.get('ai_result')
+                gpt_result     = server_data.get('gpt_result')
+                
+                message = "Succed to Receive Data from : {}".format(url)
+                print_log('active', i_am_server, i_am_hal_infer, message)
+               
+                data={
+                    'whoami'     : i_am_hal_infer,
+                    'message'    : message,
+                    'ai_result'  : ai_result,
+                    'gpt_result' : gpt_result
+                }
+
+                return Response(data, status=status.HTTP_200_OK)
+            else:
+                message="Failed to Receive Data from : {}".format(url)
+                print_log('error', i_am_hal_infer, i_am_hal_infer, message)
+                data={
+                    'whoami' : i_am_hal_infer,
+                    'message': message
+                }
+                return Response(data, status=status.HTTP_400_BAD_REQUEST)
         else:
             message = "Client Sent Invalid Data : {}".format(serializer.errors)
             print_log('error', i_am_hal_infer, i_am_hal_infer, message)
@@ -75,17 +94,6 @@ def aeye_ai_inference_request(image, url)->str:
         'operation' : 'Inference',
         'message' : 'Request AI Inference',
     }
-
     print_log('active', i_am_hal_infer, i_am_hal_infer, "Send Data to : {}".format(url))
     response = requests.post(url, data=data, files=files)
-    
-    if response.status_code == 200:
-        response_data  = response.json()
-        i_am_server    = response_data.get('whoami')
-        message_server = response_data.get('message')
-
-        return message_server
-    else:
-        message="Failed to receive Data from : {}".format(url)
-        print_log('error', i_am_hal_infer, i_am_hal_infer, message)
-        return message
+    return response
