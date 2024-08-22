@@ -41,10 +41,10 @@ services:
     depends_on:
       - db
     environment:
-      - DB_NAME=mydatabase
-      - DB_USER=myuser
-      - DB_PASSWORD=mypassword
-      - DB_HOST=db
+      - DB_NAME=aeye_database
+      - DB_USER=root
+      - DB_PASSWORD=rootpassword
+      - DB_HOST=aeye_web_db
       - DB_PORT=3306
     
   frontend:
@@ -64,10 +64,11 @@ services:
       - aeye_web
   
   db:
+    container_name: aeye_web_db
     image: mysql:8.0
     restart: always
     environment:
-      MYSQL_DATABASE: mydatabase
+      MYSQL_DATABASE: aeye_database
       MYSQL_USER: myuser
       MYSQL_PASSWORD: mypassword
       MYSQL_ROOT_PASSWORD: rootpassword
