@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from .models import aeye_database_patient_models
-from .serializers import aeye_patient_serializer
+from .serializers import aeye_patient_serializers
 
 from colorama import Fore, Back, Style
 from datetime import datetime
@@ -28,10 +28,10 @@ i_am_hal_write_data_patient = 'Router HAL - DataBase Write Patient'
 
 class aeye_database_patient_ViewSet(viewsets.ModelViewSet):
     queryset = aeye_database_patient_models.objects.all()
-    serializer_class = aeye_patient_serializer
+    serializer_class = aeye_patient_serializers
     
     def create(self, request) :
-        serializer = aeye_patient_serializer(data = request.data)
+        serializer = aeye_patient_serializers(data = request.data)
 
         if serializer.is_valid() :
             message="Client Requested DataBase Write Patient"

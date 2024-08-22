@@ -15,7 +15,7 @@ def print_log(status, whoami, hal, message) :
     if status == "active" :
         print("\n-----------------------------------------\n"   + 
               current_time + " [ " + whoami + " ] send to : " + Fore.BLUE + "[ " + hal + " ]\n" +  Fore.RESET +
-              Fore.GREEN + "[active] " + Fore.RESET + "message: [ " + Fore.GREEN + message +" ]" + Fore.RESET +
+              Fore.GREEN + "[active] " + Fore.RESET + "message: [ " + Fore.GREEN + str(message) +" ]" + Fore.RESET +
               "\n-----------------------------------------")
     elif status == "error" :
         print("\n-----------------------------------------\n"   + 
@@ -34,6 +34,8 @@ class aeye_database_checkup_ViewSet(viewsets.ModelViewSet):
         serializer = aeye_checkup_serializers(data=request.data)        
 
         patient_name = request.data.get("name")
+
+        print_log('active', i_am_hal_write_data_checkup, i_am_hal_write_data_checkup, request.data)
 
         try:
             patient = aeye_database_patient_models.objects.get(name=patient_name)
@@ -60,10 +62,11 @@ class aeye_database_checkup_ViewSet(viewsets.ModelViewSet):
             "patientId"        : patient.id,
             "date"             : request.data.get("date"),
             "symptom"          : request.data.get("symptom"),
+            "status"           : request.data.get("status"),
             "ultrasound_image" : request.data.get("ultrasound_image"),
             "ai_diagnosis"     : request.data.get("ai_diagnosis"),
             "ai_probability"   : request.data.get("ai_probability"),
-            "docotr_diagnosis" : request.data.get("doctor_diagnosis"),
+            "doctor_diagnosis" : request.data.get("doctor_diagnosis"),
         }
 
         serializer = aeye_checkup_serializers(data=checkup_data)
@@ -79,6 +82,7 @@ class aeye_database_checkup_ViewSet(viewsets.ModelViewSet):
             return Response(data, status=status.HTTP_200_OK)
         else:
             message="{}".format(serializer.errors)
+            print_log('error', i_am_hal_write_data_checkup, i_am_hal_write_data_checkup, message)
             data={
                 'whoami' : i_am_hal_write_data_checkup,
                 'message': message
