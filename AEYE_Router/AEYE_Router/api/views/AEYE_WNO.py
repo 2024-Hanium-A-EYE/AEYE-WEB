@@ -47,7 +47,7 @@ class aeye_wno_Viewsets(viewsets.ModelViewSet):
             print_log('active', i_am_api_wno, i_am_api_wno, 'Received Valid Data : {}, Oper: {}'.format(message_client, operation_client))
             print_log('active', i_am_api_wno, i_am_api_wno, 'Received Valid Data : {}'.format(request.FILES))
 
-            image = request.FILES.get('file')
+            image = request.FILES.get('image')
 
             if image is None:
                 print_log('error', i_am_api_wno, i_am_api_wno, 'Failed to receive Image')
@@ -55,22 +55,32 @@ class aeye_wno_Viewsets(viewsets.ModelViewSet):
                 return Response({'error': 'No image file provided'}, status=400)
 
             if operation_client=='Inference' :
-                image = request.FILES.get('file')
-                
+                image = request.FILES.get('image')
+                patient_id_client                 = request.data.get('id')
+                patient_name_client               = request.data.get('name')
+                patient_symptom_client            = request.data.get('symptom')
+                patient_status_client             = request.data.get('status')
+                patient_secerityPercentage_client = request.data.get('severityPercentage')
+                patient_ultrasoundImages_client   = request.data.get('ultrasound_image')
+                patient_doctor_daignosis_client   = request.data.get('doctor_diagnosis')            
+
+                data={
+                    'name'               : patient_name_client,
+                    'symptom'            : patient_symptom_client,
+                    'status'             : patient_status_client,
+                    'severityPercentage' : patient_secerityPercentage_client,
+                    'ultrasound_image'   : patient_ultrasoundImages_client,
+                    'doctor_diagnosis'   : patient_doctor_daignosis_client,
+                    'id'                 : patient_id_client,
+                }
+
                 loop = asyncio.new_event_loop()
                 asyncio.set_event_loop(loop)
-                response_from_server = loop.run_until_complete(aeye_ai_inference_request(i_am_client, image))
+                response_from_server = loop.run_until_complete(aeye_ai_inference_request(data, image))
                 
                 print_log('active', i_am_client, i_am_api_wno, "Succed to Receive Data from : {}{}".format(url_server, mw_ai_inference))
 
-                i_am_server    = response_from_server.get('whoami')
-                server_message = response_from_server.get('message')
-
-                data={
-                    'whoami' : i_am_api_wno,
-                    'message': server_message
-                } 
-                return Response(data, status=status.HTTP_200_OK)
+                return Response(response_from_server, status=status.HTTP_200_OK)
 
             elif operation_client=='Train':
                 pass
@@ -106,10 +116,10 @@ class aeye_wno_Viewsets(viewsets.ModelViewSet):
             return Response(data, status = status.HTTP_400_BAD_REQUEST)
     
 
-async def aeye_ai_inference_request(i_am_client : str, image):
+async def aeye_ai_inference_request(data, image):
     message = "Failed to Receive Data [NetOper - WNO]"
     url='{}{}'.format(url_server, mw_ai_inference)
-    print_log('active', i_am_client, i_am_api_wno, "Send Data to : {}".format(url))
+    print_log('active', i_am_api_wno, i_am_api_wno, "Send Data to : {}".format(url))
 
     async with aiohttp.ClientSession() as session:
         message='Request AI Inference'
@@ -118,6 +128,9 @@ async def aeye_ai_inference_request(i_am_client : str, image):
         form_data.add_field('message', message)
 
         form_data.add_field('image', image.read(), filename=image.name, content_type=image.content_type)
+
+        for key, value in data.items():
+            form_data.add_field(key, str(value))
         
         async with session.post(url, data=form_data) as response_from_server:            
             result_from_server = await response_from_server.json()

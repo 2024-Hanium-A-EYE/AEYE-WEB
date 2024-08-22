@@ -17,18 +17,32 @@ def print_log(status, whoami, mw, message) :
     if status == "active" :
         print("\n-----------------------------------------\n"   + 
               current_time + " [ " + whoami + " ] send to : " + Fore.BLUE + "[ " + mw + " ]\n" +  Fore.RESET +
-              Fore.GREEN + "[active] " + Fore.RESET + "message: [ " + Fore.GREEN + message +" ]" + Fore.RESET +
+              Fore.GREEN + "[active] " + Fore.RESET + "message: [ " + Fore.GREEN + str(message) +" ]" + Fore.RESET +
               "\n-----------------------------------------")
     elif status == "error" :
         print("\n-----------------------------------------\n"   + 
               current_time + " [ " + whoami + " ] send to : " + Fore.BLUE + "[ " + mw + " ]\n" +  Fore.RESET +
-              Fore.RED + "[error] " + Fore.RESET + "message: [ " + Fore.RED + message +" ]" + Fore.RESET +
+              Fore.RED + "[error] " + Fore.RESET + "message: [ " + Fore.RED + str(message) +" ]" + Fore.RESET +
               "\n-----------------------------------------")
 
 i_am_mw_infer = 'Router MW - Inference'
 
 server_url    = 'http://127.0.0.1:2000/'
 url_hal_infer = 'hal/ai-inference/'
+
+url_hal_db_w_ch = 'hal/database-write-checkup/'
+url_hal_db_r_dl = 'hal/database-read-detail/'
+
+#  'whoami', 
+#  'message',
+#  'image',
+#  'name',
+#  'symptom',
+#  'status',
+#  'severityPercentage',
+#  'ultrasoundImages',
+#  'doctor_diagnosis',
+#  'id'
 
 class aeye_inference_Viewswets(viewsets.ModelViewSet):
     queryset=aeye_inference_models.objects.all().order_by('id')
@@ -43,23 +57,57 @@ class aeye_inference_Viewswets(viewsets.ModelViewSet):
             message_client = serializer.validated_data.get('message')
             image_client   = request.FILES.get('image')
 
+            patient_id_client                 = request.data.get('id')
+            patient_name_client               = request.data.get('name')
+            patient_symptom_client            = request.data.get('symptom')
+            patient_status_client             = request.data.get('status')
+            patient_secerityPercentage_client = request.data.get('severityPercentage')
+            patient_ultrasoundImages_client   = request.data.get('ultrasound_image')
+            patient_doctor_daignosis_client   = request.data.get('doctor_diagnosis')
+
             if form.is_valid():
                     
-                print_log('active', i_am_client, i_am_mw_infer, "sent : {}".format(message_client))
+                #print_log('active', i_am_client, i_am_mw_infer, "sent : {}".format(message_client))
 
-                response_server = aeye_ai_inference_request(image_client)
-                response_data  = response_server.json()
-                i_am_server    = response_data.get('whoami')
-                message_server = response_data.get('message')
+                # response_server  = aeye_ai_inference_request(image_client)
+                # response_data    = response_server.json()
+                # i_am_server      = response_data.get('whoami')
+                # message_server   = response_data.get('message')
+                # ai_result_server = response_data.get('ai_result')
+                # gpt_result_sever = response_data.get('gpt_result')
                 
-                if response_server.status_code==200:
+                if True:
+                    now = datetime.now()
+                    formatted_date = now.strftime('%Y-%m-%d')
+
                     
-                    print_log('active', i_am_mw_infer, i_am_mw_infer, message_server)
                     data={
-                        'whoami' : i_am_mw_infer,
-                        'message': message_server
+                        'name'               : patient_name_client,
+                        'date'               : formatted_date,
+                        'symptom'            : patient_symptom_client,
+                        'status'             : patient_status_client,
+                        'severityPercentage' : patient_secerityPercentage_client,
+                        'ultrasound_image'   : patient_ultrasoundImages_client,
+                        'ai_diagnosis'       : "GOOD",
+                        'ai_probability'     : "70%",
+                        'doctor_diagnosis'   : patient_doctor_daignosis_client,
                     }
-                    return Response(data, status=status.HTTP_200_OK)
+
+                    response_sql_save = aeye_database_save_checkup(data)
+                    
+                    if response_sql_save.status_code == 200:
+                        response_sql_read = aeye_database_read_checkup(patient_id_client)
+
+                        if response_sql_read.status_code == 200:
+                            response_data = response_sql_read.json()
+                            print_log('active', i_am_mw_infer, i_am_mw_infer, response_data)
+
+                            return Response(response_data, status=status.HTTP_200_OK)
+                        else:
+                            pass
+                    else:
+                        pass
+                    
                 else:
                     message="Failed to receive data from the server: {}{}.\n server sent: {}"\
                                                                 .format(server_url, url_hal_infer, message_server)
@@ -105,3 +153,23 @@ def aeye_ai_inference_request(image):
         response = requests.post(url, data=data, files=files)
 
         return response
+
+def aeye_database_save_checkup(data):
+    url='{}{}'.format(server_url, url_hal_db_w_ch)
+    print_log('active', i_am_mw_infer, i_am_mw_infer, "Request to Save Data at : {}".format(url))
+    response = requests.post(url, data=data)
+
+    return response
+
+
+def aeye_database_read_checkup(id):
+    url='{}{}{}/'.format(server_url, url_hal_db_r_dl, id)
+    print_log('active', i_am_mw_infer, i_am_mw_infer, "Request to Read Data from : {}".format(url))
+    message="Request to Read Data from DataBase"
+    data={
+        'whoami' : i_am_mw_infer,
+        'message': message,
+    }
+    response = requests.get(url)
+
+    return response

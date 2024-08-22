@@ -16,7 +16,7 @@ router.register(r'ai-inference', aeye_inference_Viewswets)
 
 router.register(r'database-write-patient', aeye_database_patient_ViewSet)
 router.register(r'database-write-checkup', aeye_database_checkup_ViewSet)
-router.register(r'database-read-detail/<int:id>', aeye_database_read_detail_ViewSet)
+router.register(r'database-read-detail', aeye_database_read_detail_ViewSet)
 router.register(r'database-read-list', aeye_database_read_list_ViewSet)
 
 urlpatterns = [
